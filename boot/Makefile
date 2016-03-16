@@ -1,4 +1,5 @@
 DIST=./dist
+ROOT=../root
 
 all:
 	mkdir -p $(DIST)
@@ -12,3 +13,20 @@ all:
 
 run:
 	qemu-system-i386 -boot c -drive file=$(DIST)/sda,format=raw
+
+sda:
+	dd if=/dev/zero of=$(DIST)/sda bs=4096 count=4096
+	sfdisk $(DIST)/sda < sda.layout
+	mkdir -p ./mnt
+	@set -e ;\
+	echo Loop back disk file ;\
+	LOOP_DEV=$$(losetup --show -f -P $(DIST)/sda) ;\
+	LOOP_PTR=$$LOOP_DEV"p1" ;\
+	echo Loop patrition is: $$LOOP_PTR ;\
+	mkfs.ext2 $$LOOP_PTR ;\
+	mount $$LOOP_PTR ./mnt ;\
+	echo Copy root ;\
+	cp -Rv $(ROOT)/* ./mnt ;\
+	umount ./mnt ;\
+	echo Detach loop device ;\
+	losetup -D $$LOOP_DEV ;\

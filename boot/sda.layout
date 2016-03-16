@@ -1,0 +1,6 @@
+label: dos
+label-id: 0xc614a766
+device: dist/sda
+unit: sectors
+
+dist/sda1 : start=        2048, size=       30720, type=83, bootable

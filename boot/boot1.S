@@ -28,27 +28,27 @@ jmp _mian
 %include 'inc/strings.S'
 
 _mian:
-  ; call MbrActiveSector
-  ; jc ErrNoActivePatrition
-  ; mov [DiskFirstSector], eax
-  ; call EX2ReadSuperblock
+  call MbrActiveSector
+  jc ErrNoActivePatrition
+  mov [DiskFirstSector], eax
+  call EX2ReadSuperblock
 
-  mov si, StrTest1
-  mov di, StrTest2
+  ; mov si, StrTest1
+  ; mov di, StrTest2
 
-  mov cx, 3
-  call StrNCmp
+  ; mov cx, 3
+  ; call StrNCmp
 
-  jne .ne
-  mov ax, 0
-  call PrintInt
-  jmp .exit
+  ; jne .ne
+  ; mov ax, 0
+  ; call PrintInt
+  ; jmp .exit
 
-  .ne:
-  mov ax, 1
-  call PrintInt
+  ; .ne:
+  ; mov ax, 1
+  ; call PrintInt
 
-  .exit:
+  ; .exit:
 
   jmp $
 
